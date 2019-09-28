@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -28,9 +27,9 @@ import seedu.address.testutil.PersonBuilder;
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
  */
 class RemarkCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
     private static final String REMARK = "remark";
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_addRemarkUnfilteredList_success() {
