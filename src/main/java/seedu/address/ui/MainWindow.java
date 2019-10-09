@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -28,6 +30,7 @@ public class MainWindow extends UiPart<Stage> {
     private final Logger logger = LogsCenter.getLogger(getClass());
 
     private Stage primaryStage;
+    private Scene primaryScene;
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
@@ -50,6 +53,8 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    CalendarPage calendarPage;
+
     public MainWindow(Stage primaryStage, Logic logic) {
         super(FXML, primaryStage);
 
@@ -63,6 +68,7 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+        calendarPage = new CalendarPage();
     }
 
     public Stage getPrimaryStage() {
@@ -160,6 +166,27 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
+    /**
+     * Opens the calendar page.
+     */
+    @FXML
+    public void handleCalendar() {
+        // todo remove current scene and show new scene
+        if (!calendarPage.isOpened()) {
+            primaryScene = primaryStage.getScene();
+            primaryStage.setScene(calendarPage.getCalendar());
+            primaryStage.setScene(primaryScene);
+        }
+        /*
+        primaryScene = primaryStage.getScene();
+        StackPane root = new StackPane();
+        Label label = new Label("Hey");
+        root.getChildren().addAll(label);
+        Scene newScene = new Scene(root);
+        primaryStage.setScene(newScene);
+        // primaryStage.setScene(primaryScene); */
+    }
+
     public PersonListPanel getPersonListPanel() {
         return personListPanel;
     }
@@ -181,6 +208,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isShowCalendar()) {
+                handleCalendar();
             }
 
             return commandResult;
